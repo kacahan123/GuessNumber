@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+
+<style>
+
+div{
+
+	padding : 15 10 10 10;
+	font-family:"Comic Sans MS";
+	font-size:90%;
+	padding: 10px;
+	border: 1px #8f8f8f solid;
+	margin: auto;
+	opacity:0.8;
+	width:90%;
+}
+
+input{
+
+	width:40%;
+	font-size:70%;
+	padding:5px;
+	font-family:"Comic Sans MS";
+
+}
+
+button{
+
+	width 20%;
+	font-size:90%;
+	font-family:"Comic Sans MS";
+	color:#919191;
+	border: 2px #8f8f8f double;
+	border-radius: 3px;
+	outline: 0;
+
+}
+
+button:hover{
+
+	cursor:pointer;
+	font-size:11pt;
+
+}
+
+
+.row:nth-child(even) {background: #e0e0e0;}
+.row:nth-child(odd) {background: #F1F9FF;}
+
+
+b{
+	float:right; 
+	text-align:right;
+
+}
+
+body{
+	background-image: url("./congruent_outline.png");
+
+}
+
+.w, .x, .y, .z{
+	background-color:#F1F9FF;
+	text-align:left;
+	padding:20px;
+
+}
+
+.x , .y , .z ,.b ,.c{
+	display:none;
+	border:none;
+
+}
+
+.footer{
+	text-align:right;
+	color:white; 
+	border:none; 
+	font-size:7pt;
+
+}
+
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>
+
+
+
+// Jquery for swapping between Tabs
+//Show Game, hide Settings & Instruction DIV
+$(document).ready(function(){
+    $(".abutton").click(function(){
+        $(".a").show(500);
+        $(".b").hide(500);
+		$(".c").hide(500);
+		$(".abutton").css("color","black");
+		$(".cbutton").css("color","#919191");
+		$(".bbutton").css("color","#919191");
+		
+
+    });
+
+// Show Settings, hide Game & Instruction DIV
+  $(".bbutton").click(function(){
+        $(".b").show(500);
+        $(".a").hide(500);
+		$(".c").hide(500);
+		$(".bbutton").css("color","black");
+		$(".abutton").css("color","#919191");
+		$(".cbutton").css("color","#919191");
+
+    });
+
+// Show Instruction, hide Game & Settings DIV	
+	  $(".cbutton").click(function(){
+        $(".c").show(500);
+        $(".a").hide(500);
+		$(".b").hide(500);
+		$(".cbutton").css("color","black");
+		$(".bbutton").css("color","#919191");
+		$(".abutton").css("color","#919191");
+    });
+	
+	
+	// Show Game Tab, hide Setting Tab, Conclustion & Disclaimer DIV
+	  $(".wbutton").click(function(){
+        $(".w").show(500);
+        $(".x").hide(500);
+		$(".y").hide(500);
+		$(".z").hide(500);
+		$(".wbutton").css("color","black");
+		$(".xbutton").css("color","#919191");
+		$(".ybutton").css("color","#919191");
+		$(".zbutton").css("color","#919191");
+
+    });
+	// Show Setting Tab, hide Game Tab, Conclustion & Disclaimer DIV
+	  $(".xbutton").click(function(){
+        $(".x").show(500);
+        $(".w").hide(500);
+		$(".y").hide(500);
+		$(".z").hide(500);
+		$(".xbutton").css("color","black");
+		$(".wbutton").css("color","#919191");
+		$(".ybutton").css("color","#919191");
+		$(".zbutton").css("color","#919191");
+
+    });
+	
+	// Show Conclusion Tab, hide Game Tab, Setting & Disclaimer DIV	
+	  $(".ybutton").click(function(){
+        $(".y").show(500);
+        $(".x").hide(500);
+		$(".w").hide(500);
+		$(".z").hide(500);
+		$(".ybutton").css("color","black");
+		$(".wbutton").css("color","#919191");
+		$(".xbutton").css("color","#919191");
+		$(".zbutton").css("color","#919191");
+
+    });
+	
+		// Show Disclaimer Tab, hide Game Tab, Setting & Conclusion DIV		
+	  $(".zbutton").click(function(){
+        $(".z").show(500);
+        $(".x").hide(500);
+		$(".w").hide(500);
+		$(".y").hide(500);
+		$(".zbutton").css("color","black");
+		$(".wbutton").css("color","#919191");
+		$(".ybutton").css("color","#919191");
+		$(".xbutton").css("color","#919191");
+
+    });
+
+});
+	
+
+
+// JS Check Functions. 
+// Get entry value & parse to variable input_value. 
+// If User Input equals to guess value, Set Remarks & display, Increase 
+// level by 1, Sum up gross value based on previous gross value. 
+// Trigger pop up. 
+// Execute default_value() function to display the current output.
+
+// If User Input more than guess value. 
+// Set Remarks & display. Decrease Life value. 
+// Append wrong User input value to array.
+
+// If User Input less than guess value. 
+// Set Remarks & display. 
+// Append wrong User input value to array. 
+// Decrease Life value.
+// Set wrong user input value & display. 
+// Empty Entry User value. 
+
+// If Life value equal 0. 
+// Trigger pop up. 
+// Disable Button 
+// Set Remarks & display 
+// Sum up gross value based on previous gross value 
+// Saved gross value under Points 
+
+// If high level achieved 
+// Save High level value to level. 
+// Trigger Pop up
+
+// Set Life left & display 
+
+
+function docheck(){
+
+	var input_value = document.getElementById("inputv").value;
+
+
+	if (input_value == guess){
+
+		document.getElementById("remarks").innerHTML = "Remarks: Guess Correct!";
+		gross = gross + ((level * life) * multiplier);
+		pre_points = parseInt(pre_points) + ((level * life) * multiplier);
+		level = level + 1;
+		alert("Correct! Next Level: " + level);
+		localStorage.setItem("Points",pre_points);
+
+		if (level > localStorage.getItem("Levels")){
+			localStorage.setItem("Levels", level);
+		}
+
+		default_value();
+
+	}else if (input_value > guess){
+	
+		document.getElementById("remarks").innerHTML = "Remarks: Guess Value should be lesser!";
+		life = life - 1;
+		pre_guess.unshift(input_value);
+	}
+	else if (input_value < guess){
+	document.getElementById("remarks").innerHTML = "Remarks: Guess Value should be more!";
+	pre_guess.unshift(input_value);
+	life = life - 1;
+	}
+
+	document.getElementById("pre_try").innerHTML = "Previous Try: " + pre_guess;
+	document.getElementById("inputv").value = "";
+
+	if (life <= 0){
+
+		alert("Game Lose @ level: " + level);
+		document.getElementById("try_button").disabled = true;
+		document.getElementById("remarks").innerHTML = "Remarks: You lose your ALL your LIFE, please restart!"; 
+
+
+		if (level > pre_level){
+			localStorage.setItem("Levels", level);
+			alert("High level record updated");
+			default_value();
+
+		}
+	}
+	document.getElementById("life_left").innerHTML = "Life Left: " +  life;
+}
+
+// Get saved Points value & parse to variable pre_points. 
+
+// If pre_points equal to 0 or null.
+// Set and saved default value for Points, Lifes, Multiplier & Levels.
+
+// Set settings value & display.
+
+function default_value(){
+	pre_points = localStorage.getItem("Points");
+
+	if (pre_points == null){
+
+	localStorage.setItem("Points",0);
+	localStorage.setItem("Lifes", 10);
+	localStorage.setItem("Multiplier", 1);
+	localStorage.setItem("Levels", 1);
+
+	}
+
+	pre_level = localStorage.getItem("Levels");
+	life = parseInt(localStorage.getItem("Lifes"));
+	multiplier = parseInt(localStorage.getItem("Multiplier"));
+	pre_points = parseInt(localStorage.getItem("Points"));
+	pre_guess = [];
+	guess = Math.floor((Math.random() * (level*20)) + 1);
+	document.getElementById("statement").innerHTML = "Level: " + level + ", Input Value between 1 and " + (level*20).toString();
+	document.getElementById("pre_try").innerHTML = "Previous Try: " + pre_guess;
+	document.getElementById("life_left").innerHTML = "Life Left: " +  life;
+	document.getElementById("remarks").innerHTML = "Remarks: Input a value and try!";
+	document.getElementById("gross").innerHTML = "Gross: " + gross;
+	document.getElementById("try_button").disabled = false;
+	document.getElementById("setting_points").innerHTML = pre_points;
+	document.getElementById("setting_multiplier").innerHTML = multiplier;
+	document.getElementById("setting_life").innerHTML = life;
+	document.getElementById("setting_multiplier_u").innerHTML = multiplier * 500;
+	document.getElementById("setting_life_u").innerHTML = life * 700;
+	document.getElementById("setting_HL").innerHTML = pre_level;
+
+}
+
+function reset(){
+	level = 1;
+	gross = 0;
+	default_value();
+}
+// Only allow numbers in entry
+function validate(evt) {
+	var theEvent = evt || window.event;
+	var key = theEvent.keyCode || theEvent.which;
+	key = String.fromCharCode( key );
+	var regex = /[0-9]|\./;
+	
+	if( !regex.test(key) ) {
+		theEvent.returnValue = false;
+		if(theEvent.preventDefault) theEvent.preventDefault();
+	}
+}
+
+// If pre_points value more than multiplier multiply by 500
+// Prompt to proceed
+// if proceed
+// Increase multiplier by 1
+// Subtract multiplier multiply by 500 from gross points
+// Saved multiplier value into multiplier
+// Saved gross points value into pre_points
+// Re-initialise display output
+
+function Addmultiplier(){
+
+
+if (pre_points >=(multiplier * 500)){
+	var x = confirm("Sufficient Points, Proceed to upgrade from" );
+	if (x == true){
+		pre_points = parseInt(pre_points) - (multiplier * 500);
+		multiplier += 1;
+		localStorage.setItem("Multiplier", multiplier);
+		localStorage.setItem("Points", pre_points);
+		default_value();
+
+	}
+	
+}else{
+	alert("Insufficient Points");
+}
+
+}
+// If pre_points value more than life multiply by 700
+// Prompt to proceed
+// if proceed
+// Increase Life by 1
+// Subtract life multiply by 700 from gross points
+// Saved Life value into life
+// Saved gross points value into pre_points
+// Re-initialise display output
+
+function Addlife(){
+	if (pre_points >= (life * 700)){
+		var x = confirm("Sufficient Points, Proceed to upgrade from" );
+		if (x == true){
+			pre_points = parseInt((pre_points) - life*700);
+			life += 1;
+			localStorage.setItem("Lifes",life);
+			localStorage.setItem("Points", pre_points);
+			default_value();
+
+		}
+
+	}else{
+		alert("Insufficient Points");
+
+	}
+}
+
+function HardReset(){
+
+	var x = confirm("Confirm to clear? Points, High Level will be cleared.")
+	if (x == true){
+		localStorage.clear();
+		default_value();
+	}
+}
+
+
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<body onload=reset()>
+
+<center>
+	<button style="color:black" class="abutton">Game</button>
+	<button  class="bbutton">Settings</button>
+	<button  class="cbutton">Instruction</button>
+</center>
+
+<div class="a" style="border:none">
+	<div class="row" id="statement"></div>
+	<div class="row"><input autofocus  type="number" id="inputv"  onkeypress='validate(event)' placeholder="Input a value" onkeydown="if (event.keyCode == 32) document.getElementById('try_button').click()"/>
+	<button id="try_button" onclick="docheck()">Try</button>
+	<button onclick="reset()">Reset</button>
+	</div>
+	<div class="row" id="remarks"></div>
+	<div class="row" id="pre_try"></div>
+	<div class="row" id="life_left"></div>
+	<div class="row" id="gross"></div>
+</div>
+
+<div class= "b">
+	<div class="row">Highest Level Obtain:<b id="setting_HL"></b></div>
+	<div class="row">Usable Points:<b id="setting_points"></b></div>
+	<div class="row" >Multiplier:<b id = "setting_multiplier"></b></div>
+	<div class="row">Life:<b id="setting_life"></b></div>
+	<div class="row"><button onclick="Addmultiplier()" style="width:50%">Multiplier x2</button><b id="setting_multiplier_u"></b></div>
+	<div class="row"><button onclick="Addlife()" style="width:50%">Life +1</button><b id="setting_life_u"></b></div>
+	<div class="row"><button onclick="HardReset()" style="width:50%">Reset Game</button><b>FREE</b></div>
+</div>
+
+
+<div align="center" class= "c">
+	<button class="wbutton" style="color:black">Game Tab</button>
+	<button class="xbutton">Setting Tab</button>
+	<button class="ybutton">Conclusion</button>
+	<button class="zbutton">Disclaimer</button>
+
+
+<div class="w">
+	The game have infinite levels. Player will 
+	input a value based on the question given. The guess value range forumula is provided as such: 
+	((Math.random() * (level*20)) + 1). A hint 
+	will be provided at the Remarks section. For every wrong guess, a life will be decreases 
+	from the total lifes (Default= 10, Life could be increase on Settings Page). Once player lose used up their Life, the game will end. 
+	The gross points formula : Your previous points + (Life Left * current level) * Mulitiplier"). 
+	Player could click on the "Try" button or press the space bar to execute.
+</div>
+
+<div class="x">
+	This is the page where you could improve the performance of the game by sacrifice with accumulated points.
+	There are simply no limits on how high the multiplier & life can attain, as long as the points is sufficient
+	for the upgrade.
+	<br>
+	<br>(1) Improve Mulitiplier x2, Points Required = Points - (500 * multiplier)
+	<br>
+	<br>(2) Increase Life + 1, Points Required = Points - (700 * Life)
+</div>
+
+<div class="y">
+	Well.. See how high you can go! What kind of strategy will you used..to outwin the highest level!
+</div>
+
+<div class="z">
+	This Game uses HTML5 StorageLocation to store Game Settings locally. jQuery for tabbing effect & 
+	Javascript as the parent logic.No Personal data is being collected. 
+	<p>Working code simplifcation.</p>
+</div>
+
+</div>
+
+<div class="footer">Guess Number Version 1.0 </div>
+
+
+</body>
+</html>
