@@ -1,4 +1,5 @@
 # GuessNumber
+GuessNumber is a random number generator game built based on HTML5 using Javascript/ JQuery
 
 # Landing Page
 <a href="https://ibb.co/eRFMP7"><img src="https://preview.ibb.co/dufo47/Guess_The_Number1.png" alt="Guess_The_Number1" border="0"></a>
